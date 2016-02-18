@@ -42,7 +42,7 @@
 							</div>
 							<div class="error" ng-hide="notComplete">Please fill out all fields</div>
 							<div class="buttons">
-								<button class="submit" type="submit" ng-click="submit(form)">Submit</button>	
+								<button class="submit" type="submit" ng-click="submit()">Submit</button>	
 								<button class="cancel" ng-click="cancel()">Cancel</button>				
 							</div>	
 						</form>
@@ -74,7 +74,7 @@
 								<label>Total Tip</label><span ng-bind="totalTip | number:2">0.00</span>
 							</div>
 							<div>
-								<label>Meal Count</label><span ng-bind="mealCount | number:2">0</span>
+								<label>Meal Count</label><span ng-bind="mealCount">0</span>
 							</div>
 							<div>
 							<label>Avg Tip Per Meal</label><span ng-bind="avgTip | number:2">0.00</span>

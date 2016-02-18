@@ -1,7 +1,13 @@
 /*div { border: 1px solid black;}*/
 
+body {
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", 
+	"Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
 
-h1,h3 { text-align:center;}
+h1,h3 { 
+	text-align:center;
+}
 
 h3 { padding-bottom:5px;}
 
