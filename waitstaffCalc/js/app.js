@@ -18,15 +18,17 @@ myApp.controller('WaiterCtrl', ['$scope', function($scope){ //['$scope'] it need
 	$scope.init()
 
 	$scope.submit = function() {
+		console.log($scope.mealForm.$invalid) //
 		mPrice = $scope.mealPrice;
 		mTax = $scope.mealTax;
 		mTip = $scope.mealTip
 		calCharges()
 	}
-	$scope.cancel = function(){
+	$scope.cancel = function(form){	
 		$scope.mealPrice = '';
 		$scope.mealTax = '';
 		$scope.mealTip = '';
+		//form.$setPristine();
 	}
 
 	$scope.resetAll = function() {

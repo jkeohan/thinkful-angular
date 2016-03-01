@@ -27,10 +27,10 @@
 					<div class="mealInput">
 					<h3>Enter Meal Details</h3>
 				<!-- 		<form name="mealForm" ng-submit="submit()" novalidate class="ng-invalid ng-invalid-required"> -->
-					<form name="mealForm"  class="ng-invalid ng-invalid-required">
+					<form name="mealForm" novalidate>
 							<div class="details">
 								<label for="mealPrice">Base Meal Price: $</label>
-								<input type="number" ng-model="mealPrice" />
+								<input type="number" ng-model="mealPrice" required=""/>
 							</div>
 							<div class="details">
 								<label for="mealTax">Tax Rate: %</label>
@@ -38,12 +38,12 @@
 							</div>
 							<div class="details">
 								<label for="mealTip">Meal Tip: %</label>
-								<input type="number" step="1" ng-model="mealTip" />
+								<input type="number" step="1" ng-model="mealTip" required=""/>
 							</div>
-							<div class="error" ng-hide="notComplete">Please fill out all fields</div>
+							<div class="error" ng-show="mealForm.$dirty && mealForm.$invalid && mealForm.$submitted">Please fill out all fields</div>
 							<div class="buttons">
 								<button class="submit" type="submit" ng-click="submit()">Submit</button>	
-								<button class="cancel" ng-click="cancel()">Cancel</button>				
+								<button class="cancel" ng-click="cancel(mealForm)">Cancel</button>				
 							</div>	
 						</form>
 						<div class="reset">

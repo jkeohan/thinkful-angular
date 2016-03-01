@@ -18,76 +18,83 @@
 
 	</head>
 	<body ng-app="myApp">
-	<div class="wrapper" ng-controller="wordCtrl">
-		<div class="container-fluid" style="padding:30px">
+		<div class="wrapper" ng-controller="wordCtrl">
+			<div class="container-fluid" style="padding:30px">
+				<div class="row">
+					<div class="col-md-3 ">
+						<div class="img"></div>
+					</div><!--col-md-3 -->
+					<div class="col-md-9 main-heading" style="text-align:center"><img src="images/ng-mad-libs-logo.png">
+						<h1>Automate This!</h1>
+					</div><!--col-md-9 -->
+				</div><!-- row -->
+				<div class="row info">
+						<h2>Provide the following words</h2>
+							<!-- 	<div class="col-md-4" ng-repeat="val in newDefaults">
+							<input type="text" placeholder="{{val.placeholder}}" ng-model="val.value">
+							<input type="text" placeholder="{{val.placeholder}}" ng-model="val.value">
+							<input type="text" placeholder="{{val.placeholder}}" ng-model="val.value">
+						</div> -->
+						<form name="myForm" ng-submit="submit()">
+								<div class="col-md-4 input" ng-repeat="val in nDefaults">
+								<input type="text" placeholder="{{val.first.placeholder}}" ng-model="val.first.value">
+								<input type="text" placeholder="{{val.second.placeholder}}" ng-model="val.second.value">
+								<input type="text" placeholder="{{val.third.placeholder}}" ng-model="val.third.value">
+								<input type="text" placeholder="{{val.fourth.placeholder}}" ng-model="val.fourth.value">
+								<input type="text" placeholder="{{val.fifth.placeholder}}" ng-model="val.fifth.value">
+								<input type="text" placeholder="{{val.sixth.placeholder}}" ng-model="val.sixth.value">
+							</div>
+						</form>
+								<!-- 	<div class="col-md-4 input" ng-repeat="val in nDefaults">
+										<input type="text" placeholder="{{val.fourth.placeholder}}" ng-model="val.fourth.value">
+										<input type="text" placeholder="{{val.fifth.placeholder}}" ng-model="val.fifth.value">
+										<input type="text" placeholder="{{val.sixth.placeholder}}" ng-model="val.sixth.value">
+									</div> -->
+								<!-- 	<div class="col-md-4 wordInput">
+										<input type="text" placeholder="{{defaults.placeholder}}" ng-model=defaults.value>
+										<input type="text" placeholder="Job Title" ng-model="job_title">
+										<input type="text" placeholder="Tediuous Task" ng-model="tedius_task">
+									</div> -->
+								<!-- 	<div class="col-md-4 wordInput">
+											<input type="text" placeholder="Male Name" ng-model="male_name">
+										<input type="text" placeholder="Job Title" ng-model="job_title">
+										<input type="text" placeholder="Tediuous Task" ng-model="tedius_task">
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12 output">
+									<!-The show\hide are both needed and work with ng-model 
+										<div class="col-md-4 wordInput">
+										<input type="text" placeholder="Male Name" ng-model="male_name">-->
+
+						 <!-- <span ng-show="male_name" ng-bind="male_name"></span>
+									<span ng-hide="male_name">Male Name</span> -->
+					</div>
 			<div class="row">
-				<div class="col-md-3 ">
-					<div class="img"></div>
-				</div>
-				<div class="col-md-9 main-heading" style="text-align:center"><img src="images/ng-mad-libs-logo.png">
-					<h1>Automate This!</h1>
-				</div>
-			</div>
-			<div class="row" >
-				<h2>Provide the following words</h2>
-			<!-- 	<div class="col-md-4" ng-repeat="val in newDefaults">
-					<input type="text" placeholder="{{val.placeholder}}" ng-model="val.value">
-					<input type="text" placeholder="{{val.placeholder}}" ng-model="val.value">
-					<input type="text" placeholder="{{val.placeholder}}" ng-model="val.value">
-				</div> -->
+						<div class="col-md-12 output" ng-repeat="val in nDefaults">
+						<!-- This show\hide works with the  -->
 
-				<div class="col-md-4 input" ng-repeat="val in nDefaults">
-					<input type="text" placeholder="{{val.first.placeholder}}" ng-model="val.first.value">
-					<input type="text" placeholder="{{val.second.placeholder}}" ng-model="val.second.value">
-					<input type="text" placeholder="{{val.third.placeholder}}" ng-model="val.third.value">
-				</div>
-				<div class="col-md-4 input" ng-repeat="val in nDefaults">
-					<input type="text" placeholder="{{val.first.placeholder}}" ng-model="val.first.value">
-					<input type="text" placeholder="{{val.second.placeholder}}" ng-model="val.second.value">
-					<input type="text" placeholder="{{val.third.placeholder}}" ng-model="val.third.value">
-				</div>
-			<!-- 	<div class="col-md-4 wordInput">
-					<input type="text" placeholder="{{defaults.placeholder}}" ng-model=defaults.value>
-					<input type="text" placeholder="Job Title" ng-model="job_title">
-					<input type="text" placeholder="Tediuous Task" ng-model="tedius_task">
-				</div> -->
-			<!-- 	<div class="col-md-4 wordInput">
-						<input type="text" placeholder="Male Name" ng-model="male_name">
-					<input type="text" placeholder="Job Title" ng-model="job_title">
-					<input type="text" placeholder="Tediuous Task" ng-model="tedius_task">
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12 output">
-				<!-- The show\hide are both needed and work with ng-model 
-					<div class="col-md-4 wordInput">
-					<input type="text" placeholder="Male Name" ng-model="male_name">-->
-
-	 <!-- <span ng-show="male_name" ng-bind="male_name"></span>
-				<span ng-hide="male_name">Male Name</span> -->
-			</div>
-	<div class="row">
-				<div class="col-md-12 output" ng-repeat="val in nDefaults">
-<!-- This show\hide works with the  -->
-
-				<!-- 	<input type="text" placeholder="{{val.first.placeholder}}" ng-model="val.first.value"> -->
-				<!-- <span ng-show="male_name">{{male_name}}</span><span ng-hide="male_name">Male Name</span> -->
-				<!-- if ng-bind has a value then run ng-show -->
-				<code class="large"><span ng-show="nDefaults[0].first.value" ng-bind="nDefaults[0].first.value"></span></code>
-				<span ng-hide="nDefaults[0].first.value"><code class="large">{{val.first.placeholder}}</code></span>	
-					was a 
-				<code><span ng-show="nDefaults[0].second.value" ng-bind="nDefaults[0].second.value"></span></code>
-				<span ng-hide="nDefaults[0].second.value"><code>{{val.second.placeholder}}</code></span> who loved technology. Although he loved parts of her job, she absolutely hated 
-				<code><span ng-show="nDefaults[0].third.value" ng-bind="nDefaults[0].third.value"></span></code>
-				<span ng-hide="nDefaults[0].third.value"><code>{{val.third.placeholder}}</code></span>
-					<!-- and {{dirty task}}. So, {{female_name}} met with her life mentor {{celebrity}} who told her to learn how to {{useless skill}} with Thinkful. Thinkful didn't offer a course on {{useless skill}} so she studied programming instead. 
- 
-What a great decision! With her new skills, {{female name}} built a(n) {{adjective}} robot named {{obnoxiuous celbertity}} that not only loved {{dirty task}} but did it {{huge number}} faster. 
- -->
-				</div><!--row -- >
-			</div>
-		</div><!-- container-fluid -->
-	</div><!--wrapper -->
-
+						<!-- 	<input type="text" placeholder="{{val.first.placeholder}}" ng-model="val.first.value"> -->
+						<!-- <span ng-show="male_name">{{male_name}}</span><span ng-hide="male_name">Male Name</span> -->
+						<!-- if ng-bind has a value then run ng-show -->
+						<p>
+						<code class="large"><span ng-show="nDefaults[0].first.value" ng-bind="nDefaults[0].first.value"></span></code>
+						<span ng-hide="nDefaults[0].first.value"><code class="large">{{val.first.placeholder}}</code></span>	
+							was a 
+						<code><span ng-show="nDefaults[0].second.value" ng-bind="nDefaults[0].second.value"></span></code>
+						<span ng-hide="nDefaults[0].second.value"><code>{{val.second.placeholder}}</code></span> 
+						who loved technology. Although he loved parts of her job, she absolutely hated 
+						<code><span ng-show="nDefaults[0].third.value" ng-bind="nDefaults[0].third.value"></span></code>
+						<span ng-hide="nDefaults[0].third.value"><code>{{val.third.placeholder}}</code></span>
+						and
+						<code><span ng-show="nDefaults[0].fourth.value" ng-bind="nDefaults[0].fourth.value"></span></code>
+						<span ng-hide="nDefaults[0].fourth.value"><code>{{val.fourth.placeholder}}</code></span> <!-- {{dirty task}}. So, {{female_name}} met with her life mentor {{celebrity}} who told her to learn how to {{useless skill}} with Thinkful. Thinkful didn't offer a course on {{useless skill}} so she studied programming instead.  -->
+			</p>
+					 <!-- a
+					What a great decision! With her new skills, {{female name}} built a(n) {{adjective}} robot named {{obnoxiuous celbertity}} that not only loved {{dirty task}} but did it {{huge number}} faster. 
+					 -->
+				</div><!--row-->
+			</div><!-- container-fluid -->
+		</div><!--wrapper -->
 	</body>
 	</html>

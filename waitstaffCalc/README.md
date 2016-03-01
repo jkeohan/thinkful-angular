@@ -71,7 +71,15 @@ ISSUE: unable to update the subtotal using class="ng-binding"
 RESOLUTION: Used ng-bind directive 
 <label>Subtotal</label><span ng-bind="subtotal | number:2">0.00</span>
 
+meeting:
 
+novalidate
+ng-messages...another way to show messages
+$dirty\$valid\$submitted
+{{mealform}} in the form will show the status of the mealform
+
+TODO...
+use mg-messages to display errors
 
 
 

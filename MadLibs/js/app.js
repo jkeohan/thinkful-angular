@@ -7,8 +7,11 @@ myapp.controller("wordCtrl", function($scope) {
 
 	var nDefaults = [ 
 		{ first: { placeholder: "male name"}, 
-			second: { placeholder: "job title"},
-			third: { placeholder: "task"}
+			second:{ placeholder: "job title"},
+			third: { placeholder: "task"},
+			fourth: { placeholder: "dirty task"}, 
+			fifth: { placeholder: "celebrity"},
+			sixth: { placeholder: "useless skill"}
 		}]
 	$scope.nDefaults = nDefaults 
 
