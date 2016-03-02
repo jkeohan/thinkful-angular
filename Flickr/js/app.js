@@ -1,86 +1,64 @@
-var myApp = angular.module("myApp", []);
+
+var myApp = angular.module("myApp", ['ngAnimate']);
 
 myApp.controller('flickrCtrl', ['$scope','$http',function($scope,$http){ 
+
 	'use strict';
 	$scope.searchMsg = false;
 	$scope.resultMsg = false;
 	$scope.errorMsg = false;
 
-	$scope.submit = function() {
+		$scope.submit = function() {
 		if($scope.searchForm.$invalid) {
-			console.log($scope.searchForm.$invalid)
+			console.log($scope.searchForm.$invalid);
 		}
 		else {
 			$scope.searchQueryCopy = $scope.searchQuery;
-			$scope.searchQuery = ' ';
+			// $scope.searchQuery = ' ';
 			$scope.resultMsg = false;
 			$scope.searchMsg = true;
+			//CALL FETCHIMAGE 
+			fetchImage($scope.searchQueryCopy);
+		}
+			
+	};
 
-			var url = "https://api.flickr.com/services/rest";
-			var request = {
-		    method: 'flickr.photos.search',
-		    api_key: '1f248d8314f6e79c501fdb818513f0ff',
-		    tags: $scope.searchQueryCopy,
-		    format: 'json',
-		    jsoncallback: 'JSON_CALLBACK'
-		    // nojsoncallback: '1'
-			}
-
-			 $http({
-		      method: 'JSONP',
-		      url: url,
-		      params: request
-		    })
-			 	.success(function(result) {
-			 		console.log("success")
-			 		updateView(result)
-				 })
-			 	.error(function(result) { 
-			 		console.log(('error'))
-			 		errorView()
-			 	})
-			}//submit()
-
-			function updateView(result) {
-					console.log(result)
-					$scope.searchMsg = false;
-       		$scope.resultsMsg = true;
-		      $scope.result = result.photos.photo
-		      $scope.results = $scope.result.length
-			}
-
-			function errorView(){
-				$scope.searchMsg = false;
-
-			}
-		}//flickrCtrl
-}]);	
-
-//JSON RETURNED BY FLICKR API CALL
-// id: "25022884939",
-// owner: "43046057@N05",
-// secret: "c284ab498f",
-// server: "1456",
-// farm: 2,
-// title: "Doggy Heaven",
-// ispublic: 1,
-// isfriend: 0,
-// isfamily: 0
-
-//FORMAT FOR DISPLAYING IMG
-// https://farm{farmId}.staticflickr.com/{serverId}/{id}_{secret}.jpg
-// https://farm2.staticflickr.com/1456/25022884939_c284ab498f.jpg
+	function fetchImage(searchQuery){
+		$scope.resultsMsg = false;
+		flickr(searchQuery)//$HTTP IS RETURNED SO A PROMISE CAN BE LEVEREAGED
+			.then(updateView, errorView);
 		
- 
-// ISSUE: Cannot read property of jsonp
-// RESOLUTION: Removed the jsonp from $http.jsonp and then updated code to use thinkfuls $http request format. 
+		function updateView(result) {
+			console.log(result);
+			$scope.searchMsg = false;
+			$scope.resultsMsg = true;
+	      	$scope.result = result.data.photos.photo;
+	      	$scope.results = $scope.result.length;
+		}
 
-//ISSUE: resultsMsg not changing until after promise which means both msgs are being displayed.  Only happens on 
-//       running a subsequent query
-//RESOLUTION: 
+		function errorView(){
+			$scope.searchMsg = false;
+		}
+	}
 
-//ISSUE: unable to animate the searchMsg div or images.  would like to stagger the pics as they enter
-//RESOLUTION: 
-//REVIEW ARTICLE WITH MOHAMMAD
-//TO THEN() OR TO SUCCESS()
-//http://www.peterbe.com/plog/promises-with-$http
+	//FLICKR WILL EXECUTE THE XHR REQUEST ONLY
+	function flickr(searchQuery){
+		//this function is responsible for all the flickr stuff
+		var url = "https://api.flickr.com/services/rest";
+		var request = {
+	    	method: 'flickr.photos.search',
+	    	api_key: '1f248d8314f6e79c501fdb818513f0ff',
+	    	tags: $scope.searchQueryCopy,
+	    	format: 'json',
+	    	jsoncallback: 'JSON_CALLBACK',
+	    	per_page: 6
+		};
+		//$HTTP NEEDS TO BE RETURNED
+	 	return $http({
+	      method: 'JSONP',
+	      url: url,
+	      params: request
+	    });
+	}
+
+}]);

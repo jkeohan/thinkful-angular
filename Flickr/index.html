@@ -24,13 +24,17 @@
 					<div class="col-md-offset-3 col-md-6">
 						<h1>Flickr Search</h1>
 						<form name="searchForm" novalidate>
-							<input type="text" ng-model="searchQuery" placeholder="enter a tag to search" required=""/>
+							<input type="text" 
+								ng-model="searchQuery" 
+								placeholder="enter a tag to search" 
+								ng-required="true"/>
+										<div class="formInvalid" ng-show="searchForm.searchQuery.$invalid && searchForm.searchQuery.$touched">Please enter a search term....</div>
 							<button type="submit" ng-click="submit()">Submit</button>
 						</form>
-						<div class="searchInit" ng-if="searchMsg" >
+						<div ng-if="searchMsg" class="searchInit animate" >
 							Searching Flickr for photos tagged with "{{searchQueryCopy}}"
 						</div>
-						<div class="searchResults" ng-if="resultsMsg">
+						<div ng-if="resultsMsg" class="searchResults animate" >
 							We found {{results}} search results for "{{searchQueryCopy}}"
 						</div>
 						<div class="formInvalid" ng-show="searchForm.$invalid && searchForm.$submitted">Please enter a search term....</div>
@@ -39,11 +43,14 @@
 				</div>
 				<div id="main" class="row">
 					<div class="col-md-12">
+						<div class="center">
 						<div class="pictures animate" ng-repeat="pic in result">
 								<img  ng-src="https://farm{{pic.farm}}.staticflickr.com/{{pic.server}}/{{pic.id}}_{{pic.secret}}.jpg"/>
+						</div>
 						</div>
 				</div>
 			</div>
 		</div>
+	</div>
 	</body>
 	</html>
