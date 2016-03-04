@@ -1,4 +1,4 @@
-var myApp = angular.module("myApp", ['ui.router'])
+var myApp = angular.module("myApp", ['ui.router','ngAnimate'])
 
 myApp.config(function($stateProvider, $urlRouterProvider) {
 	$urlRouterProvider.otherwise('/');
@@ -17,6 +17,24 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
 			templateUrl: 'partials/earnings.html',
 			controller: 'WaiterCtrl'
 		})
+		.state('error', {
+			url:'/error',
+			templateUrl: 'partials/error.html'
+		})
+})
+
+myApp.run(function($rootScope, $state, $timeout) {
+    $rootScope.$on('$routeChangeError', function() {
+        $state.go("/error");
+    });
+    $rootScope.$on('$routeChangeStart', function() {
+        $rootScope.isLoading = true;
+    });
+    $rootScope.$on('$routeChangeSuccess', function() {
+      $timeout(function() {
+        $rootScope.isLoading = false;
+      }, 1000);
+    });
 })
 
 myApp.controller('WaiterCtrl', ['$scope', function($scope){ //['$scope'] it needs to be  a string here
@@ -44,9 +62,9 @@ myApp.controller('WaiterCtrl', ['$scope', function($scope){ //['$scope'] it need
 		calCharges()
 	}
 	$scope.cancel = function(form){	
-		$scope.mealPrice = '';
-		$scope.mealTax = '';
-		$scope.mealTip = '';
+		$scope.mealPrice = 0;
+		$scope.mealTax = 0;
+		$scope.mealTip = 0;
 		//form.$setPristine();
 	}
 
