@@ -3,6 +3,10 @@ var myApp = angular.module("myApp", ['ui.router','ngAnimate'])
 myApp.config(function($stateProvider, $urlRouterProvider) {
 	$urlRouterProvider.otherwise('/');
 	$stateProvider//this is a service
+		.state('/', {
+			url:"/",
+			templateUrl:"partials/home.html"
+		})
 		.state('home', {
 			url:"/home",
 			templateUrl:"partials/home.html"
@@ -10,12 +14,12 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
 		.state('meal', {
 			url:'/meal',
 			templateUrl: 'partials/meal.html',
-			controller: 'WaiterCtrl'
+			controller: 'mealCtrl'
 		})
 		.state('earnings', {
 			url:'/earnings',
 			templateUrl: 'partials/earnings.html',
-			controller: 'WaiterCtrl'
+			controller: 'earningsCtrl'
 		})
 		.state('error', {
 			url:'/error',
@@ -24,38 +28,55 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
 })
 
 myApp.run(function($rootScope, $state, $timeout) {
-    $rootScope.$on('$routeChangeError', function() {
+    $rootScope.$on('$stateChangeError', function() {
         $state.go("/error");
     });
-    $rootScope.$on('$routeChangeStart', function() {
+    $rootScope.$on('$stateChangeStart', function() {
         $rootScope.isLoading = true;
     });
-    $rootScope.$on('$routeChangeSuccess', function() {
+    $rootScope.$on('$stateChangeSuccess', function() {
+    	//timeout placed here so that it runs after the transistion has been kicked off
+    	//placing it in $stateChageStart would cause it to first load when the page renders
       $timeout(function() {
         $rootScope.isLoading = false;
       }, 1000);
+
     });
+    	$rootScope.totalTip = 0;
+    	$rootScope.mealCount = 0;
+    	$rootScope.avgTip = 0;
 })
 
-myApp.controller('WaiterCtrl', ['$scope', function($scope){ //['$scope'] it needs to be  a string here
+myApp.controller('earningsCtrl', ['$scope','$rootScope', function($scope,$rootScope){
+		$scope.resetAll = function() {
+			$rootScope.totalTip = 0;
+    	$rootScope.mealCount = 0;
+    	$rootScope.avgTip = 0;
+		};
+}])
+
+myApp.controller('mealCtrl', ['$scope','$rootScope', function($scope,$rootScope){ //['$scope'] it needs to be  a string here
 	'use strict'
 	var mPrice,mTax,mTip,sub,total
+	console.log("yes")
 
 	$scope.notComplete = true;
 
 	$scope.init = function() {
 	$scope.subtotal = 0;
-	$scope.tip = 0;
+	$rootScope.tip = 0;
 	$scope.total = 0;
-	$scope.totalTip = 0;
-	$scope.mealCount = 0;
-	$scope.avgTip = 0;
+	// $rootScope.totalTip = 0;
+	// $rootScope.mealCount = 0;
+	$rootScope.avgTip = 0;
 	}
 
 	$scope.init()
 
 	$scope.submit = function() {
-		console.log($scope.mealForm.$invalid) //
+
+		console.log("yes")
+		//console.log($scope.mealForm.$invalid) //
 		mPrice = $scope.mealPrice;
 		mTax = $scope.mealTax;
 		mTip = $scope.mealTip
@@ -68,13 +89,10 @@ myApp.controller('WaiterCtrl', ['$scope', function($scope){ //['$scope'] it need
 		//form.$setPristine();
 	}
 
-	$scope.resetAll = function() {
-		$scope.cancel();
-		$scope.init();
-	};
+
 
 	function calCharges() {
-		$scope.tip = (mPrice * (mTip/100));
+		$rootScope.tip = (mPrice * (mTip/100));
 		$scope.tax = (mPrice * (mTax/100));
 		$scope.subtotal = mPrice + $scope.tax;
 		$scope.total = ($scope.subtotal + $scope.tax);
@@ -82,9 +100,13 @@ myApp.controller('WaiterCtrl', ['$scope', function($scope){ //['$scope'] it need
 	};
 
 	function calEarnings() {
-		$scope.totalTip += $scope.tip;
-		$scope.mealCount = $scope.mealCount + 1;
-		$scope.avgTip += $scope.totalTip/$scope.mealCount;
+		// $rootScope.totalTip += $rootScope.tip;
+		// $rootScope.mealCount = $rootScope.mealCount + 1;
+		// $rootScope.avgTip += $rootScope.totalTip/$rootScope.mealCount;
+
+		$rootScope.totalTip += $rootScope.tip;
+		$rootScope.mealCount = $rootScope.mealCount + 1;
+		$rootScope.avgTip += $rootScope.totalTip/$rootScope.mealCount;
 	};
 }]);
 	
